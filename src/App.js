@@ -6,7 +6,8 @@ import CounterHook from './components/CounterHook';
 import ParentName from './parentChild/ParentName';
 import ParentComponent from './parentChild/ParentComponent';
 import EmployeeList from './List/EmployeeList';
-import ChartItem from './List/ChartItem';
+import ChartItems from './List/ChartItem';
+import ChartItem from './form/ChartItem';
 function App() {
   return (
     <>
@@ -14,9 +15,8 @@ function App() {
       <CounterArrow/>
       <CounterHook/> 
       <ParentName/> 
-      <ParentComponent/> 
-      <ChartItem/> */}
-      <EmployeeList/> 
+      <ParentComponent/> */}
+      <ChartItem/> 
       
     </>
   );

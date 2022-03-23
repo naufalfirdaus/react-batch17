@@ -41,7 +41,7 @@ export default function ChartItem() {
         const TotalQty = cart.reduce((sum,el)=>sum + el.qty,0)
         setTotalQty(TotalQty)
     },[cart])
-  return (
+  return ( 
     <div>
         <h2>List of Carts</h2>
         <table>
