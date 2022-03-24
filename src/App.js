@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import React from 'react'
 import './App.css';
 import Counter from './components/Counter';
 import CounterArrow from './components/CounterArrow';
@@ -8,17 +9,12 @@ import ParentComponent from './parentChild/ParentComponent';
 import EmployeeList from './List/EmployeeList';
 import ChartItems from './List/ChartItem';
 import ChartItem from './form/ChartItem';
+
 function App() {
   return (
-    <>
-      {/* <Counter/> 
-      <CounterArrow/>
-      <CounterHook/> 
-      <ParentName/> 
-      <ParentComponent/> */}
-      <ChartItem/> 
-      
-    </>
+       <>
+       <ChartItem/>
+       </>
   );
 }
 
