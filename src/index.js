@@ -7,12 +7,27 @@ import store from './redux/store';
 import storeToolkit from './features/storeToolkit';
 import reportWebVitals from './reportWebVitals';
 
+import {createBrowserHistory} from 'history'
+import {Router} from 'react-router-dom'
+import Routes from './Routes';
+
+const browserHistory = createBrowserHistory()
+
+browserHistory.listen(location =>{
+setTimeout(()=>{
+  if (location.action === 'POP') {
+    return
+  }
+  window.scrollTo(0,0)
+})
+})
+
 ReactDOM.render(
   
   <Provider store={storeToolkit}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <Router history={browserHistory}>
+      <Routes />
+    </Router>
   </Provider>,
   
   document.getElementById('root')
