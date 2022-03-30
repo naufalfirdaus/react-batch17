@@ -10,6 +10,7 @@ import reportWebVitals from './reportWebVitals';
 import {createBrowserHistory} from 'history'
 import {Router} from 'react-router-dom'
 import Routes from './Routes';
+import stores from './redux-saga/store'
 
 const browserHistory = createBrowserHistory()
 
@@ -24,7 +25,7 @@ setTimeout(()=>{
 
 ReactDOM.render(
   
-  <Provider store={storeToolkit}>
+  <Provider store={stores}>
     <Router history={browserHistory}>
       <Routes />
     </Router>
