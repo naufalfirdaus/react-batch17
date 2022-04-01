@@ -9,6 +9,9 @@ export default function MainLayout() {
             <Link to='/region'>
                 Region
             </Link>
+            <Link to='/employee'>
+                Employee
+            </Link>
         </ul>
     </div>
   )
