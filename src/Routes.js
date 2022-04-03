@@ -1,18 +1,26 @@
 import React from 'react'
-import {Switch,Redirect,Route} from 'react-router-dom'
+import { Navigate, useRoutes } from 'react-router-dom'
+import DashboardLayout from './layout/DashboardLayout'
 import MainLayout from './layout/MainLayout'
 import Region from './regions/Region'
 import AddRegion from './regions/AddRegion'
 import EditRegion from './regions/EditRegion'
+import Employee from './Employee/Employee'
+import AddEmployee from './Employee/AddEmployee'
 
 export default function Routes() {
-  return (
-    <Switch>
-        <Redirect exact from='/' to='/home'/>
-        <Route path='/home' component={MainLayout}/>
-        <Route exact path='/region' component={Region}/>
-        <Route exact path='/region/new' component={AddRegion}/>
-        <Route exact path='/region/edit/:id' component={EditRegion}/>
-    </Switch>
-  )
+  return useRoutes([
+    {
+        path: '/',
+        element: <DashboardLayout />,
+        children: [
+            { path: 'region', element: <Region /> },
+            { path: 'region/new', element: <AddRegion /> },
+            { path: 'region/edit', element: <EditRegion /> },
+            { path: 'employee', element: <Employee /> },
+            { path: 'employee/new', element: <AddEmployee /> },
+        ]
+    },
+    { path: '*', element: <Navigate to='/404' replace /> }
+])
 }

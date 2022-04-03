@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import store from './redux/store';
-import storeToolkit from './features/storeToolkit';
+import store from './redux-saga/stores';
 import reportWebVitals from './reportWebVitals';
 
 import {createBrowserHistory} from 'history'
 import {Router} from 'react-router-dom'
 import Routes from './Routes';
+import { BrowserRouter } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async';
 
 const browserHistory = createBrowserHistory()
 
@@ -24,10 +25,12 @@ setTimeout(()=>{
 
 ReactDOM.render(
   
-  <Provider store={storeToolkit}>
-    <Router history={browserHistory}>
+  <Provider store={store}>
+    <HelmetProvider>
+      <BrowserRouter>
       <Routes />
-    </Router>
+      </BrowserRouter>
+    </HelmetProvider>
   </Provider>,
   
   document.getElementById('root')

@@ -2,58 +2,53 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Page from '../components/commons/Page';
 import { useNavigate, Link } from "react-router-dom";
-import AddRegion from './AddRegion';
-import EditRegion from './EditRegion';
+import { GetEmployeeRequest } from '../redux-saga/actions/EmployeeAction'
+import { DelEmployeeRequest } from '../redux-saga/actions/EmployeeAction'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { ToastContainer, toast } from 'react-toastify';
+import config from '../config/config';
 import {
     DotsVerticalIcon,
-    DuplicateIcon,
+    DupliempIcon,
     PencilAltIcon,
     TrashIcon,
     UserAddIcon,
 } from '@heroicons/react/solid'
-import { GetRegionsRequest, DelRegionsRequest } from '../redux-saga/actions/RegionsAction';
-
+import AddEmployee from './AddEmployee'
 const columns = [
-    { name: 'Region Id' },
-    { name: 'Region Name' },
+    { name: 'Employee Id' },
+    { name: 'Full Name' },
+    { name: 'Email' },
+    { name: 'Phone Number' },
+    { name: 'Hire Date' },
+    { name: 'Job Id' },
+    { name: 'Salary' },
+    { name: 'Manager Id' },
+    { name: 'Department Id' },
+    { name: 'Profile' },
 ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-export default function Region() {
-    let navigate = useNavigate()
+export default function Employee() {
     const dispatch = useDispatch()
+    const { employees } = useSelector(state => state.employeeStated)
     let [isOpen, setIsOpen] = useState(false);
     let [refresh, setRefresh] = useState(false);
     let [isEditOpen, setIsEditOpen] = useState(false);
     const [editPayload, setEditPayload] = useState();
 
-    const { regions } = useSelector((state) => state.regionsStated)
-
-
     useEffect(() => {
-        dispatch(GetRegionsRequest())
-        setRefresh(false)
-    }, [refresh])
+        dispatch(GetEmployeeRequest())
+    }, [])
 
-    // const onDelete = async (id) =>{
-    //     dispatch(doDeleteRequest(id));
-    // }
     const onDelete = async (id) => {
-        dispatch(DelRegionsRequest(id))
+        dispatch(DelEmployeeRequest(id))
     }
-    const onEdit = async (id) => {
-        setEditPayload(id);
-        setIsEditOpen(true)
-
-    }
-
     return (
         <div>
-            <Page title='Region' titleButton='Create' onClick={() => setIsOpen(true)}>
+            <Page title='Employee' titleButton='Create' onClick={() => setIsOpen(true)}>
                 <table className="min-w-full">
                     <thead>
                         <tr className="border-t border-gray-200">
@@ -70,10 +65,22 @@ export default function Region() {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-100">
                         {
-                            regions && regions.map(regi => (
-                                <tr key={regi.region_id}>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{regi.region_id}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{regi.region_name}</td>
+                            employees && employees.map(emp => (
+                                <tr key={emp.employee_id}>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{emp.employee_id}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{emp.first_name} {emp.last_name}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{emp.email}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{emp.phone_number}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{emp.hire_date}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{emp.job_id}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{emp.salary}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{emp.manager_id}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{emp.department_id}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <div className="flex-shrink-0 h-10 w-10">
+                                            <img className="h-10 w-10 rounded-full" src={`${config.urlImage}/${emp.profile}`} alt={emp.profile} />
+                                        </div>
+                                    </td>
                                     <td>
                                         <Menu as="div" className="relative flex justify-end items-center">
                                             {({ open }) => (
@@ -96,12 +103,12 @@ export default function Region() {
                                                             static
                                                             className="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg z-10 bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
                                                         >
-                                                            <div className="py-1">
+                                                            {/* <div className="py-1">
                                                                 <Menu.Item>
                                                                     {({ active }) => (
 
                                                                         <Link to='#'
-                                                                            onClick={() => onEdit(regi.region_id)}
+                                                                            onClick={() => onEdit(emp.emp_id)}
                                                                             className={classNames(
                                                                                 active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                                                                 'group flex items-center px-4 py-2 text-sm'
@@ -116,7 +123,7 @@ export default function Region() {
                                                                     )}
                                                                 </Menu.Item>
 
-                                                            </div>
+                                                            </div> */}
                                                             <div className="py-1">
                                                                 <Menu.Item>
                                                                     {({ active }) => (
@@ -124,7 +131,7 @@ export default function Region() {
                                                                             to="#"
                                                                             onClick={() => {
                                                                                 if (window.confirm("Delete this record")) {
-                                                                                    onDelete(regi.region_id)
+                                                                                    onDelete(emp.employee_id)
                                                                                 }
                                                                             }}
                                                                             className={classNames(
@@ -155,21 +162,13 @@ export default function Region() {
             </Page>
             <ToastContainer autoClose={2000} />
             {
-                isOpen ? <AddRegion
+                isOpen ? <AddEmployee
                     isOpen={isOpen}
                     closeModal={() => setIsOpen(false)}
                     onRefresh={() => setRefresh(true)}
                 /> : null
             }
 
-            {
-                isEditOpen ? <EditRegion
-                    isOpen={isEditOpen}
-                    closeModal={() => setIsEditOpen(false)}
-                    onRefresh={() => setRefresh(true)}
-                    id={editPayload}
-                /> : null
-            }
         </div>
     )
 }
