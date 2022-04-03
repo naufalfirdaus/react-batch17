@@ -3,14 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import store from './redux/store';
-import storeToolkit from './features/storeToolkit';
+import store from './redux-saga/stores';
 import reportWebVitals from './reportWebVitals';
 
 import {createBrowserHistory} from 'history'
 import {Router} from 'react-router-dom'
 import Routes from './Routes';
-import stores from './redux-saga/store'
 
 const browserHistory = createBrowserHistory()
 
@@ -25,7 +23,7 @@ setTimeout(()=>{
 
 ReactDOM.render(
   
-  <Provider store={stores}>
+  <Provider store={store}>
     <Router history={browserHistory}>
       <Routes />
     </Router>
